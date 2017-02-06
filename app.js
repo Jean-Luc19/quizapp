@@ -4,15 +4,18 @@ var quizHtml =
 
 
 var state = {
+  
+  
   questions:[
     {
    question:"What is the name of the species that compelled Capt. James T. Kirk and Lt. Nyota Uhura to kiss?",
    choices:["The Platonians", "The Vulcans", "The Romulans", "The Kazon"],
-   correct: 0;
+   correct: 0,
     },
   ],
-  //score
-  //currentQuestion index
+  currentQuestion: -1,
+  answers:[0],
+
 };
 
 // modify state functions
@@ -26,17 +29,19 @@ function displayNextQuestion (state, question_number, element) {
   $display.removeClass('hidden');
   var questionHTML = `<p class="question">${currentquestion.question}</p>`;
   currentquestion.choices.forEach(function (answer, i) {
-    questionHTML += `<button id='${i}'> ${answer} </button>`;
+    questionHTML += `<button class ="ansBut" id='${i}'> ${answer} </button>`;
   });
   $display.html(questionHTML);
-  console.log(questionHTML);
-
-
-  // $('.quiz').removeClass('hidden');
-  // console.log(state);
 }
+
+
 
 //event handlers
 $('.begin').on('click', function(event){
   displayNextQuestion(state, 0, $('.question'));
+});
+
+$('.quiz').on('click','.ansBut', function(event){
+  var checkAnswerId = $(this).attr('id'); 
+    console.log(checkAnswerId); 
 });

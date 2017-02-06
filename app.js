@@ -21,15 +21,22 @@ function getCurrentQuestion(state) {
   state.currentQuestion ++;
 }
 function updateUserAnswers (state, uA) {
-  state.userAnswers.push(uA);
+  var convertedAnswer = Number(uA);
+  state.userAnswers.push(convertedAnswer);
 }
+
 //caluclator functions
 function checkUserAnswer(state) {
   var userAnswer = state.userAnswers[0];
   var correctAnswer = state.questions[0].correct;
-  
-}
-checkUserAnswer(state);
+  if (userAnswer === correctAnswer) {
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+console.log(checkUserAnswer(state));
 
 //render functions
 function displayNextQuestion (state, question_number, element) {
@@ -48,6 +55,17 @@ function displayNextQuestion (state, question_number, element) {
   console.log(state);
 }
 
+function displayFeedBack(state) {
+  var checker = checkUserAnswer(state);
+    var $display = $('.quiz');
+    var feedbackHtml = ``;
+    if (checker) {
+      feedbackHtml += `<h1>Q'plah!</h1>`;
+    }
+    else {feedbackHtml += `<h1>You SUCK BORG!</h1>`}
+    $display.html(feedbackHtml);
+}
+
 
 
 //event handlers
@@ -59,6 +77,7 @@ $('.begin').on('click', function(event){
 $('.quiz').on('click','.ansBut', function(event){
   var checkAnswerId = $(this).attr('id');
   updateUserAnswers(state, checkAnswerId);
+  displayFeedBack(state);
   console.log(state);
 });
 

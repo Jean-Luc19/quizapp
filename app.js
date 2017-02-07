@@ -81,7 +81,6 @@ function checkUserAnswer(state) {
     if (userAnswer === correctAnswer) {
       state.score ++;
       return true;
-
     }
     else {
       return false;
@@ -97,7 +96,14 @@ function displayNextQuestion (state) {
     $('.startpage').removeClass('hidden');
   }
   else if (state.currentQuestion >= state.questions.length) {
-     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2>`)
+    var rank = ["Ensign", "Lieutenant", "Commander", "Captain", "Commodore", "Admiral"]
+    if (state.score > 1 && state.score < 2) {rank = rank[0]}
+      else if (state.score > 2 && state.score < 4) {rank = rank[1]}
+      else if (state.score > 4 && state.score < 6) {rank = rank[2]}
+      else if (state.score > 6 && state.score < 8) {rank = rank[3]}
+      else if (state.score >= 8 && state.score < 9) {rank = rank[4]}
+      else if (state.score = 10) {rank = rank[5]};
+     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ` + rank)
   }
   $('.startpage').addClass('hidden');
   var currentQuestionObj = state.questions[state.currentQuestion];

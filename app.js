@@ -137,13 +137,14 @@ function displayFeedBack(state) {
     }
     else {
       var questionObject = state.questions[state.currentQuestion]
-      feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was${questionObject.answers[questionObject.correct]}`
+      feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was <em>${questionObject.answers[questionObject.correct]}</em>`
     }
     feedbackHtml += `<p>Score: ${state.score} out of ${state.currentQuestion + 1}</p>`
     $display.html(feedbackHtml);
 }
 function removeStartPageHiddenClass() {
   $('.startpage').removeClass('hidden');
+  $('.quiz').addClass('hidden');
 };
 
 
@@ -196,9 +197,9 @@ Things to work on today:
 2. Refactor function and variable naming
 3. Optional: clean up rank functionality -Done
 Styling:
-1. Beautify buttons
-2. Start screen style div
-3. feedback image toggle
+1. Beautify buttons -Done
+2. Start screen style div -Done
+3. feedback image toggle 
 4. stylize ranking presentation
 5.
 

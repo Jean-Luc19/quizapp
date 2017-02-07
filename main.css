@@ -32,6 +32,10 @@ div {
   padding: 30px;
 }
 
+.quiz {
+  text-align: center;
+ 
+}
 .startpage {
   text-align: center;
   color: black;
@@ -45,4 +49,6 @@ div {
 button {
   font-size: 20px;
   margin: 2px auto;
+  margin-left: 2px;
+  margin-right: 2px;
 }

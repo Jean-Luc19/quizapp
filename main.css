@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
 }
 html {
   background: ;
@@ -29,4 +30,19 @@ div {
 
 .quiz, .startpage {
   padding: 30px;
+}
+
+.startpage {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  background-image: url("images/logopin.jpg");
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+button {
+  font-size: 20px;
+  margin: 2px auto;
 }

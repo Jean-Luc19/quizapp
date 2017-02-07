@@ -1,6 +1,6 @@
 
 var bgImages = [`images/img1.jpg`, `images/img2.jpg`, `images/img3.jpg`, `images/img4.jpg`, `images/img5.jpg`, `images/img6.jpg`, `images/img7.jpg`, `images/img8.jpg`]
-var ranks = ["Warp Conduit Scrubber", "Ensign: Firstclass", "Ensign: Gold Star", "Lieutenant", "Commander", "Captain", "Commodore", "Rear Admiral", "Admiral", "You are a Q"];
+var ranks = ["Warp Conduit Scrubber", "Ensign: Firstclass", "Ensign: Gold Star", "Lieutenant", "Commander", "Captain", "Commodore", "Rear Admiral", "Admiral", "Q"];
 
 var state = {
   questions:[
@@ -92,7 +92,7 @@ function checkUserAnswer(state) {
 }
 function setRank(state) {
   var percentScore = Math.floor((state.score / state.currentQuestion) * 10);
-  var rank = 'dork';
+  var rank = "Q!";
   ranks.forEach(function(item, i) {
     if (i === percentScore) {
       rank = item;

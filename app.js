@@ -1,8 +1,6 @@
-var quizHtml =
-`<p class="question"></p>
-  <ul class="s">`
-var bgImages = [`images/img1.jpg`, `images/img2.jpg`, `images/img3.jpg`, `images/img4.jpg`, `images/img5.jpg`, `images/img6.jpg`, `images/img7.jpg`, `images/img8.jpg`]
 
+var bgImages = [`images/img1.jpg`, `images/img2.jpg`, `images/img3.jpg`, `images/img4.jpg`, `images/img5.jpg`, `images/img6.jpg`, `images/img7.jpg`, `images/img8.jpg`]
+var ranks = ["Warp Conduit Scrubber", "Ensign: Firstclass", "Ensign: Gold Star", "Lieutenant", "Commander", "Captain", "Commodore", "Rear Admiral", "Admiral", "You are a Q"];
 
 var state = {
   questions:[
@@ -74,8 +72,8 @@ function updateUserAnswers (state, uA) {
 }
 function resetStateVariables (state) {
   state.currentQuestion = -1;
-  state.userAnswers = []; 
-  state.score = 0; 
+  state.userAnswers = [];
+  state.score = 0;
 }
 
 //caluclator functions
@@ -91,8 +89,17 @@ function checkUserAnswer(state) {
       return false;
     }
   }
-};
-
+}
+function setRank(state) {
+  var percentScore = Math.floor((state.score / state.currentQuestion) * 10);
+  var rank = 'dork';
+  ranks.forEach(function(item, i) {
+    if (i === percentScore) {
+      rank = item;
+    }
+  });
+  return rank;
+}
 
 //render functions
 function displayNextQuestion (state) {
@@ -101,14 +108,9 @@ function displayNextQuestion (state) {
     $('.startpage').removeClass('hidden');
   }
   else if (state.currentQuestion >= state.questions.length) {
-    var rank = ["Ensign", "Lieutenant", "Commander", "Captain", "Commodore", "Admiral"]
-    if (state.score > 1 && state.score < 2) {rank = rank[0]}
-      else if (state.score > 2 && state.score < 4) {rank = rank[1]}
-      else if (state.score > 4 && state.score < 6) {rank = rank[2]}
-      else if (state.score > 6 && state.score < 8) {rank = rank[3]}
-      else if (state.score >= 8 && state.score < 9) {rank = rank[4]}
-      else if (state.score = 10) {rank = rank[5]};
-     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${rank}</h3><button class="restart">Replay Mission</button>`);
+    var currentRank = setRank(state);
+
+    return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${currentRank}</h3><button class="restart">Replay Mission</button>`);
   }
   $('.startpage').addClass('hidden');
   var currentQuestionObj = state.questions[state.currentQuestion];
@@ -119,7 +121,7 @@ function displayNextQuestion (state) {
     questionHTML += `<button class ="ansBut" id='${i}'> ${answer} </button>`;
   });
   $display.html(questionHTML);
-  console.log(state);
+
 }
 function changeBackgroundImage() {
   var x =  Math.floor(Math.random() * bgImages.length);
@@ -190,9 +192,9 @@ User clicks next button
 state is currentquestion = 1 userAnswers.length = 1
 
 Things to work on today:
-1. Create Restart function
+1. Create Restart function - done
 2. Refactor function and variable naming
-3. Optional: clean up rank functionality
+3. Optional: clean up rank functionality -Done
 Styling:
 1. Beautify buttons
 2. Start screen style div

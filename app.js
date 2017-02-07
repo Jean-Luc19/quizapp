@@ -11,10 +11,51 @@ var state = {
    correct: 0,
     },
     {
-   question:"This is the next question that should be up compelled Capt. James T. Kirk and Lt. Nyota Uhura to kiss?",
-   answers:["The Platonians", "The Vulcans", "The Romulans", "The Kazon"],
+   question:"Which of the following was not a founding species of the United Federation of Planets, a collection of governments based on universal liberty and equality?",
+   answers:["Vulcans", "Betazoids", "Andorians", "Tellarites"],
+   correct: 1,
+    },
+    {
+   question:"In what episode was Lt. Commander Geordi Laforge shown seeing without his VISOR?",
+   answers:["Elementary, Dear Data TNG Season 2, Episode 3", "Galaxy's Child TNG Season 4, Episode 16", "Timeless Voyager season 5, Episode 6", "Identity Crises TNG Season 4, Episode 18"],
+   correct: 3,
+    },
+    {
+   question:"Which of Jean-Luc Picard’s Organs is Artificial?",
+   answers:["Brain", "Liver", "Gall Bladder", "Heart"],
+   correct: 3,
+    },
+     {
+   question:"Who was the disgraced scientist who created Lt. Cmdr Data, an android who was ultimately granted rights and privileges equal to those afforded to all humanoid species?",
+   answers:["Julian Bashir", "Noonien Soong", "Tolian Soran", "Ma'Bor Jetrel"],
+   correct: 1,
+    },
+    {
+   question:"What is the name of the alien who killed Lt. Tasha Yar (played by Denise Crosby, who chose to leave the Next Generation series after its first season)?",
+   answers:["Armus", "Locutus", "Nagilum", "Khan"],
    correct: 0,
     },
+    {
+   question:"Which of the following was not a host for the Dax symbiont?",
+   answers:["Jadzia", "Curzon", "Odan", "Ezri"],
+   correct: 2,
+    },
+    {
+   question:"Which of these species don’t have any telepathic abilities",
+   answers:["Bejorans", "Vulcans", "Klingon", "Betazoid"],
+   correct: 0,
+    },
+    {
+   question:"What is the First Rule Of Acquisition?",
+   answers:["Home is where the heart is, but the stars are made of latinum.", "Once you have their money, you never give it back.", "Never begin a business negotiation on an empty stomach.", "No good deed ever goes unpunished"],
+   correct: 1,
+    },
+    {
+   question:"What title was given by the bajorans to Capt. Benjamin Sisko?",
+   answers:["The Prophet", "The Messiah", "The Minister", "The Emissary"],
+   correct: 3,
+    },
+    
   ],
   currentQuestion: -1,
   userAnswers:[],

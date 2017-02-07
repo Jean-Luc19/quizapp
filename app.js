@@ -1,6 +1,7 @@
 var quizHtml =
 `<p class="question"></p>
   <ul class="s">`
+var bgImages = [`images/img1.jpg`, `images/img2.jpg`, `images/img3.jpg`, `images/img4.jpg`, `images/img5.jpg`, `images/img6.jpg`, `images/img7.jpg`, `images/img8.jpg`]
 
 
 var state = {
@@ -55,7 +56,7 @@ var state = {
    answers:["The Prophet", "The Messiah", "The Minister", "The Emissary"],
    correct: 3,
     },
-    
+
   ],
   currentQuestion: -1,
   userAnswers:[],
@@ -102,8 +103,8 @@ function displayNextQuestion (state) {
       else if (state.score > 4 && state.score < 6) {rank = rank[2]}
       else if (state.score > 6 && state.score < 8) {rank = rank[3]}
       else if (state.score >= 8 && state.score < 9) {rank = rank[4]}
-      // else if (state.score = 10) {rank = rank[5]};
-     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ` + rank)
+      else if (state.score = 10) {rank = rank[5]};
+     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${rank}</h3>`);
   }
   $('.startpage').addClass('hidden');
   var currentQuestionObj = state.questions[state.currentQuestion];
@@ -116,11 +117,15 @@ function displayNextQuestion (state) {
   $display.html(questionHTML);
   console.log(state);
 }
-
+function changeBackgroundImage() {
+  var x =  Math.floor(Math.random() * bgImages.length);
+  var imagePath = bgImages[x];
+  $('html').css('background', `url(${imagePath}) no-repeat center center fixed`);
+}
 function displayFeedBack(state) {
   var checker = checkUserAnswer(state);
     var $display = $('.quiz');
-    var feedbackHtml = `<button class='next'>Next Question</button><p>${state.score}</p>`;
+    var feedbackHtml = `<button class='next'>Next Question</button>`;
     if (checker) {
       feedbackHtml += `<h1>Q'plah! You Are Correct</h1>`;
     }
@@ -128,6 +133,7 @@ function displayFeedBack(state) {
       var questionObject = state.questions[state.currentQuestion]
       feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was${questionObject.answers[questionObject.correct]}`
     }
+    feedbackHtml += `<p>Score: ${state.score} out of ${state.currentQuestion + 1}</p>`
     $display.html(feedbackHtml);
 }
 
@@ -137,12 +143,14 @@ function displayFeedBack(state) {
 $('.begin').on('click', function(event){
   getCurrentQuestion(state);
   displayNextQuestion(state);
+  changeBackgroundImage();
 });
 
 $('.quiz').on('click','.ansBut', function(event){
   var checkAnswerId = $(this).attr('id');
   updateUserAnswers(state, checkAnswerId);
   displayFeedBack(state);
+  changeBackgroundImage();
 
 });
 $('.quiz').on('click','.next', function(event){

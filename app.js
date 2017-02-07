@@ -19,6 +19,7 @@ var state = {
   currentQuestion: -1,
   userAnswers:[],
   score: 0,
+  ranks: ['Ensign', 'Commander', 'Captain', 'Admiral'],
 
 };
 //{state.questions[state.currentquestion].answers[state.questions[state.currentquestion].correct]}

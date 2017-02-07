@@ -153,6 +153,7 @@ $('.quiz').on('click','.ansBut', function(event){
   changeBackgroundImage();
 
 });
+//testing branches
 $('.quiz').on('click','.next', function(event){
   getCurrentQuestion(state);
   displayNextQuestion(state);
@@ -176,6 +177,16 @@ User clicks next button
 
 state is currentquestion = 1 userAnswers.length = 1
 
+Things to work on today:
+1. Create Restart function
+2. Refactor function and variable naming
+3. Optional: clean up rank functionality
+Styling:
+1. Beautify buttons
+2. Start screen style div
+3. feedback image toggle
+4. stylize ranking presentation
+5.
 
 
 

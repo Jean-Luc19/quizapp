@@ -21,41 +21,41 @@ var state = {
    answers:["Elementary, Dear Data TNG Season 2, Episode 3", "Galaxy's Child TNG Season 4, Episode 16", "Timeless Voyager season 5, Episode 6", "Identity Crises TNG Season 4, Episode 18"],
    correct: 3,
     },
-    {
-   question:"Which of Jean-Luc Picard’s Organs is Artificial?",
-   answers:["Brain", "Liver", "Gall Bladder", "Heart"],
-   correct: 3,
-    },
-     {
-   question:"Who was the disgraced scientist who created Lt. Cmdr Data, an android who was ultimately granted rights and privileges equal to those afforded to all humanoid species?",
-   answers:["Julian Bashir", "Noonien Soong", "Tolian Soran", "Ma'Bor Jetrel"],
-   correct: 1,
-    },
-    {
-   question:"What is the name of the alien who killed Lt. Tasha Yar (played by Denise Crosby, who chose to leave the Next Generation series after its first season)?",
-   answers:["Armus", "Locutus", "Nagilum", "Khan"],
-   correct: 0,
-    },
-    {
-   question:"Which of the following was not a host for the Dax symbiont?",
-   answers:["Jadzia", "Curzon", "Odan", "Ezri"],
-   correct: 2,
-    },
-    {
-   question:"Which of these species don’t have any telepathic abilities",
-   answers:["Bejorans", "Vulcans", "Klingon", "Betazoid"],
-   correct: 0,
-    },
-    {
-   question:"What is the First Rule Of Acquisition?",
-   answers:["Home is where the heart is, but the stars are made of latinum.", "Once you have their money, you never give it back.", "Never begin a business negotiation on an empty stomach.", "No good deed ever goes unpunished"],
-   correct: 1,
-    },
-    {
-   question:"What title was given by the bajorans to Capt. Benjamin Sisko?",
-   answers:["The Prophet", "The Messiah", "The Minister", "The Emissary"],
-   correct: 3,
-    },
+  //   {
+  //  question:"Which of Jean-Luc Picard’s Organs is Artificial?",
+  //  answers:["Brain", "Liver", "Gall Bladder", "Heart"],
+  //  correct: 3,
+  //   },
+  //    {
+  //  question:"Who was the disgraced scientist who created Lt. Cmdr Data, an android who was ultimately granted rights and privileges equal to those afforded to all humanoid species?",
+  //  answers:["Julian Bashir", "Noonien Soong", "Tolian Soran", "Ma'Bor Jetrel"],
+  //  correct: 1,
+  //   },
+  //   {
+  //  question:"What is the name of the alien who killed Lt. Tasha Yar (played by Denise Crosby, who chose to leave the Next Generation series after its first season)?",
+  //  answers:["Armus", "Locutus", "Nagilum", "Khan"],
+  //  correct: 0,
+  //   },
+  //   {
+  //  question:"Which of the following was not a host for the Dax symbiont?",
+  //  answers:["Jadzia", "Curzon", "Odan", "Ezri"],
+  //  correct: 2,
+  //   },
+  //   {
+  //  question:"Which of these species don’t have any telepathic abilities",
+  //  answers:["Bejorans", "Vulcans", "Klingon", "Betazoid"],
+  //  correct: 0,
+  //   },
+  //   {
+  //  question:"What is the First Rule Of Acquisition?",
+  //  answers:["Home is where the heart is, but the stars are made of latinum.", "Once you have their money, you never give it back.", "Never begin a business negotiation on an empty stomach.", "No good deed ever goes unpunished"],
+  //  correct: 1,
+  //   },
+  //   {
+  //  question:"What title was given by the bajorans to Capt. Benjamin Sisko?",
+  //  answers:["The Prophet", "The Messiah", "The Minister", "The Emissary"],
+  //  correct: 3,
+  //   },
 
   ],
   currentQuestion: -1,
@@ -72,7 +72,11 @@ function updateUserAnswers (state, uA) {
   var convertedAnswer = Number(uA);
   state.userAnswers.push(convertedAnswer);
 }
-
+function resetStateVariables (state) {
+  state.currentQuestion = -1;
+  state.userAnswers = []; 
+  state.score = 0; 
+}
 
 //caluclator functions
 function checkUserAnswer(state) {
@@ -104,7 +108,7 @@ function displayNextQuestion (state) {
       else if (state.score > 6 && state.score < 8) {rank = rank[3]}
       else if (state.score >= 8 && state.score < 9) {rank = rank[4]}
       else if (state.score = 10) {rank = rank[5]};
-     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${rank}</h3>`);
+     return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${rank}</h3><button class="restart">Replay Mission</button>`);
   }
   $('.startpage').addClass('hidden');
   var currentQuestionObj = state.questions[state.currentQuestion];
@@ -136,6 +140,9 @@ function displayFeedBack(state) {
     feedbackHtml += `<p>Score: ${state.score} out of ${state.currentQuestion + 1}</p>`
     $display.html(feedbackHtml);
 }
+function removeStartPageHiddenClass() {
+  $('.startpage').removeClass('hidden');
+};
 
 
 
@@ -153,15 +160,20 @@ $('.quiz').on('click','.ansBut', function(event){
   changeBackgroundImage();
 
 });
-//testing branches
+
 $('.quiz').on('click','.next', function(event){
   getCurrentQuestion(state);
   displayNextQuestion(state);
   console.log(state);
 });
 
+$('.quiz').on('click','.restart', function(event){
+  resetStateVariables(state);
+  removeStartPageHiddenClass();
+  console.log(state);
+});
 
-
+// Modify state current question -1 answer array[]
 
 
 /*

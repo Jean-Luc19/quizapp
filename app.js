@@ -1,4 +1,121 @@
+$(function(){
+  var $display = $('.quiz');
+  function displayNextQuestion (state) {
+    console.log($display);
 
+    if (state.currentQuestion === -1) {
+      $('.startpage').removeClass('hidden');
+    }
+    else if (state.currentQuestion >= state.questions.length) {
+      var currentRank = setRank(state);
+
+      return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${currentRank}</h3><button class="restart">Replay Mission</button>`);
+    }
+    $('.startpage').addClass('hidden');
+    var currentQuestionObj = state.questions[state.currentQuestion];
+
+    $display.removeClass('hidden');
+    var questionHTML = `<p class="question">${currentQuestionObj.question}</p>`;
+    currentQuestionObj.answers.forEach(function (answer, i) {
+      questionHTML += `<button class ="ansBut" id='${i}'> ${answer} </button>`;
+    });
+    $display.html(questionHTML);
+
+  }
+  function getCurrentQuestion(state) {
+    state.currentQuestion ++;
+  }
+  function updateUserAnswers (state, uA) {
+    var convertedAnswer = Number(uA);
+    state.userAnswers.push(convertedAnswer);
+  }
+  function resetStateVariables (state) {
+    state.currentQuestion = -1;
+    state.userAnswers = [];
+    state.score = 0;
+  }
+
+  //caluclator functions
+  function checkUserAnswer(state) {
+    if (state.currentQuestion >= 0) {
+      var userAnswer = state.userAnswers[state.currentQuestion];
+      var correctAnswer = state.questions[state.currentQuestion].correct;
+      if (userAnswer === correctAnswer) {
+        state.score ++;
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
+
+  function setRank(state) {
+    var percentScore = Math.floor((state.score / state.currentQuestion) * 10);
+    var rank;
+    // ranks.forEach(function(item, i) {
+    //   if (i === percentScore) {
+    //     rank = item;
+    //   }
+    // });
+    return ranks[percentScore];
+  }
+
+  //render functions
+
+  function changeBackgroundImage() {
+    var x =  Math.floor(Math.random() * bgImages.length);
+    var imagePath = bgImages[x];
+    $('html').css('background', `url(${imagePath}) no-repeat center center fixed`);
+  }
+  function displayFeedBack(state) {
+    var checker = checkUserAnswer(state);
+
+      var feedbackHtml = `<button class='next'>Next Question</button>`;
+      if (checker) {
+        feedbackHtml += `<h1>Q'plah! You Are Correct</h1>`;
+      }
+      else {
+        var questionObject = state.questions[state.currentQuestion]
+        feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was${questionObject.answers[questionObject.correct]}`
+      }
+      feedbackHtml += `<p>Score: ${state.score} out of ${state.currentQuestion + 1}</p>`
+      $display.html(feedbackHtml);
+  }
+  function removeStartPageHiddenClass() {
+    $('.startpage').removeClass('hidden');
+  };
+
+
+  $('.begin').on('click', function(event){
+    console.log($display);
+    getCurrentQuestion(state);
+    displayNextQuestion(state);
+    changeBackgroundImage();
+  });
+
+  $('.quiz').on('click','.ansBut', function(event){
+    var checkAnswerId = $(this).attr('id');
+    updateUserAnswers(state, checkAnswerId);
+    displayFeedBack(state);
+    changeBackgroundImage();
+
+  });
+
+  $('.quiz').on('click','.next', function(event){
+    getCurrentQuestion(state);
+    displayNextQuestion(state);
+    console.log(state);
+  });
+
+  $('.quiz').on('click','.restart', function(event){
+    resetStateVariables(state);
+    removeStartPageHiddenClass();
+    console.log(state);
+  });
+
+
+});
 var bgImages = [`images/img1.jpg`, `images/img2.jpg`, `images/img3.jpg`, `images/img4.jpg`, `images/img5.jpg`, `images/img6.jpg`, `images/img7.jpg`, `images/img8.jpg`]
 var ranks = ["Warp Conduit Scrubber", "Ensign: Firstclass", "Ensign: Gold Star", "Lieutenant", "Commander", "Captain", "Commodore", "Rear Admiral", "Admiral", "Q"];
 
@@ -63,118 +180,11 @@ var state = {
 };
 //{state.questions[state.currentquestion].answers[state.questions[state.currentquestion].correct]}
 // modify state functions
-function getCurrentQuestion(state) {
-  state.currentQuestion ++;
-}
-function updateUserAnswers (state, uA) {
-  var convertedAnswer = Number(uA);
-  state.userAnswers.push(convertedAnswer);
-}
-function resetStateVariables (state) {
-  state.currentQuestion = -1;
-  state.userAnswers = [];
-  state.score = 0;
-}
-
-//caluclator functions
-function checkUserAnswer(state) {
-  if (state.currentQuestion >= 0) {
-    var userAnswer = state.userAnswers[state.currentQuestion];
-    var correctAnswer = state.questions[state.currentQuestion].correct;
-    if (userAnswer === correctAnswer) {
-      state.score ++;
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-}
-function setRank(state) {
-  var percentScore = Math.floor((state.score / state.currentQuestion) * 10);
-  var rank = "Q!";
-  ranks.forEach(function(item, i) {
-    if (i === percentScore) {
-      rank = item;
-    }
-  });
-  return rank;
-}
-
-//render functions
-function displayNextQuestion (state) {
-  var $display = $('.quiz');
-  if (state.currentQuestion === -1) {
-    $('.startpage').removeClass('hidden');
-  }
-  else if (state.currentQuestion >= state.questions.length) {
-    var currentRank = setRank(state);
-
-    return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${state.questions.length}</h2><h3>You have achieved the rank of ${currentRank}</h3><button class="restart">Replay Mission</button>`);
-  }
-  $('.startpage').addClass('hidden');
-  var currentQuestionObj = state.questions[state.currentQuestion];
-  var $display = $('.quiz');
-  $display.removeClass('hidden');
-  var questionHTML = `<p class="question">${currentQuestionObj.question}</p>`;
-  currentQuestionObj.answers.forEach(function (answer, i) {
-    questionHTML += `<button class ="ansBut" id='${i}'> ${answer} </button>`;
-  });
-  $display.html(questionHTML);
-
-}
-function changeBackgroundImage() {
-  var x =  Math.floor(Math.random() * bgImages.length);
-  var imagePath = bgImages[x];
-  $('html').css('background', `url(${imagePath}) no-repeat center center fixed`);
-}
-function displayFeedBack(state) {
-  var checker = checkUserAnswer(state);
-    var $display = $('.quiz');
-    var feedbackHtml = `<button class='next'>Next Question</button>`;
-    if (checker) {
-      feedbackHtml += `<h1>Q'plah! You Are Correct</h1>`;
-    }
-    else {
-      var questionObject = state.questions[state.currentQuestion]
-      feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was <em>${questionObject.answers[questionObject.correct]}</em>`
-    }
-    feedbackHtml += `<p>Score: ${state.score} out of ${state.currentQuestion + 1}</p>`
-    $display.html(feedbackHtml);
-}
-function removeStartPageHiddenClass() {
-  $('.startpage').removeClass('hidden');
-  $('.quiz').addClass('hidden');
-};
+//bad function name
 
 
 
 //event handlers
-$('.begin').on('click', function(event){
-  getCurrentQuestion(state);
-  displayNextQuestion(state);
-  changeBackgroundImage();
-});
-
-$('.quiz').on('click','.ansBut', function(event){
-  var checkAnswerId = $(this).attr('id');
-  updateUserAnswers(state, checkAnswerId);
-  displayFeedBack(state);
-  changeBackgroundImage();
-
-});
-
-$('.quiz').on('click','.next', function(event){
-  getCurrentQuestion(state);
-  displayNextQuestion(state);
-  console.log(state);
-});
-
-$('.quiz').on('click','.restart', function(event){
-  resetStateVariables(state);
-  removeStartPageHiddenClass();
-  console.log(state);
-});
 
 // Modify state current question -1 answer array[]
 
@@ -197,9 +207,9 @@ Things to work on today:
 2. Refactor function and variable naming
 3. Optional: clean up rank functionality -Done
 Styling:
-1. Beautify buttons -Done
-2. Start screen style div -Done
-3. feedback image toggle 
+1. Beautify buttons
+2. Start screen style div
+3. feedback image toggle
 4. stylize ranking presentation
 5.
 

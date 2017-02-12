@@ -117,7 +117,7 @@ function displayFeedBack(state) {
     }
     else {
       var questionObject = questions[state.currentQuestion]
-      feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was${questionObject.answers[questionObject.correct]}`
+      feedbackHtml += `<h1>Phasers Offline</h1><h2>The correct answer was: ${questionObject.answers[questionObject.correct]}`
     }
     feedbackHtml += `<p>Score: ${state.score} out of ${state.currentQuestion + 1}</p>`
     $display.html(feedbackHtml);
@@ -131,17 +131,17 @@ function displayNextQuestion (state) {
   else if (state.currentQuestion >= questions.length) {
     var currentRank = setRank(state);
 
-    return $('.quiz').html(`<h2>Game Over Man, You're final score is ${state.score} out of ${questions.length}</h2><h3>You have achieved the rank of ${currentRank}</h3><button class="restart">Replay Mission</button>`);
+    return $display.html(`<h2>Game Over Man, You're final score is ${state.score} out of ${questions.length}</h2><h3>You have achieved the rank of ${currentRank}</h3><button class="restart">Replay Mission</button>`);
   }
   $('.startpage').addClass('hidden');
   var currentQuestionObj = questions[state.currentQuestion];
 
-  $('.quiz').removeClass('hidden');
+  $display.removeClass('hidden');
   var questionHTML = `<p class="question">${currentQuestionObj.question}</p>`;
   currentQuestionObj.answers.forEach(function (answer, i) {
     questionHTML += `<button class ="ansBut" id='${i}'> ${answer} </button>`;
   });
-  $('.quiz').html(questionHTML);
+  $display.html(questionHTML);
 }
 function removeStartPageHiddenClass() {
   $('.startpage').removeClass('hidden');
@@ -154,20 +154,20 @@ function initClickHandlers (state) {
     displayNextQuestion(appState);
     changeBackgroundImage();
   });
-  $('.quiz').on('click','.ansBut', function(event){
+  $display.on('click','.ansBut', function(event){
     var checkAnswerId = $(this).attr('id');
     updateUserAnswers(appState, checkAnswerId);
     displayFeedBack(appState);
     changeBackgroundImage();
   });
-  $('.quiz').on('click','.next', function(event){
+  $display.on('click','.next', function(event){
     getCurrentQuestion(appState);
     displayNextQuestion(appState);
   });
-  $('.quiz').on('click','.restart', function(event){
+  $display.on('click','.restart', function(event){
     resetStateVariables(appState);
     removeStartPageHiddenClass();
-    $('.quiz').addClass('hidden');
+    $display.addClass('hidden');
   });
 }
 

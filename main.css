@@ -18,7 +18,7 @@ button.next {
 }
 div {
   height: 400px;
-  width: 400px;
+  width: 500px;
   margin-top: 100px;
   margin-right: auto;
   margin-left: auto;
@@ -31,10 +31,14 @@ div {
 .quiz, .startpage {
   padding: 30px;
 }
+form {
+  max-width: 350px;
+  margin: auto;
+}
 
 .quiz {
   text-align: center;
- 
+
 }
 .startpage {
   text-align: center;
@@ -51,4 +55,9 @@ button {
   margin: 2px auto;
   margin-left: 2px;
   margin-right: 2px;
+}
+.user_answer {
+  width: 90%;
+  margin-bottom: 5px;
+  border-radius: 30px;
 }
